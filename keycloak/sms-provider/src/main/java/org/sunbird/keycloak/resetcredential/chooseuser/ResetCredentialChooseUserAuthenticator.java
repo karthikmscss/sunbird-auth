@@ -1,5 +1,6 @@
 package org.sunbird.keycloak.resetcredential.chooseuser;
 
+import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 import org.jboss.logging.Logger;
@@ -82,6 +83,10 @@ public class ResetCredentialChooseUserAuthenticator implements Authenticator {
     EventBuilder event = context.getEvent();
     MultivaluedMap<String, String> formData = context.getHttpRequest().getDecodedFormParameters();
     String username = formData.getFirst("username");
+    System.out.println("Gooooot it ::::::::::::::::::::::::::::::::::::::::::::"+username);
+    String firstName = formData.getFirst("firstname");
+    System.out.println("Gooooot it ::::::::::::::::::::::::::::::::::::::::::::"+firstName);
+
     if (username == null || username.isEmpty()) {
       event.error(Errors.USERNAME_MISSING);
       Response challenge = context.form().setError(Messages.MISSING_USERNAME).createPasswordReset();
@@ -90,12 +95,11 @@ public class ResetCredentialChooseUserAuthenticator implements Authenticator {
     }
     UserModel user = null;
     try {
-
       user = SunbirdModelUtils.getUserByNameEmailOrPhone(context, username);
-    //user not found for provided username
+      //user not found for provided username
       if(user == null){
-        event.error(Messages.INVALID_USER);
-        Response challenge = context.form().setError(Errors.USER_NOT_FOUND).createPasswordReset();
+        event.error("hdsasjhdkjas");
+        Response challenge = context.form().setAttribute("username", username).createForm("sms-validation-error.ftl");
         context.failureChallenge(AuthenticationFlowError.INVALID_USER, challenge);
         return;
       }
