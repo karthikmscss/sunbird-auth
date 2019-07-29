@@ -23,12 +23,12 @@ public class UserServiceProviderFactory implements UserStorageProviderFactory<Us
 
   @Override
   public String getId() {
-    return "cassandra-storage-provider";
+    return "postgres-storage-provider";
   }
 
   @Override
   public List<ProviderConfigProperty> getConfigProperties() {
     return ProviderConfigurationBuilder.create().property().name("host").label("Host")
-        .helpText("Cassandra DB host").type("String").defaultValue("localhost").add().build();
+        .helpText("Postgres DB host").type("String").defaultValue("localhost").add().build();
   }
 }

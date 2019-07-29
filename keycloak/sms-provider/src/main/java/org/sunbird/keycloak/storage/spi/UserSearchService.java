@@ -42,7 +42,7 @@ public class UserSearchService {
     request.put("filters", filters);
     request.put("fields", Arrays.asList("email","firstName","lastName","id","phone","userName","countryCode","status"));
     userRequest.put("request", request);
-    String searchUrl = System.getenv("sunbird_cs_base_url")+"/private/user/v1/search";
+    String searchUrl ="http://localhost:9000"+"/v1.3/user/search";
     Map<String, Object> resMap =
         post(userRequest, searchUrl, System.getenv(Constants.SUNBIRD_LMS_AUTHORIZATION));
     logger.info("UserSearchService:getUserByKey responseMap "+resMap);
@@ -102,7 +102,7 @@ public class UserSearchService {
       httpPost.setEntity(entity);
       httpPost.setHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON);
       httpPost.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON);
-      if (StringUtils.isNotBlank(authKey)) {
+      if (StringUtils.isNotBlank(authorizationKey)) {
         httpPost.setHeader(HttpHeaders.AUTHORIZATION, authKey);
       }
      // httpPost.setHeader("x-authenticated-user-token", getToken());
@@ -137,8 +137,7 @@ public class UserSearchService {
       }
       return "";
     } catch (Exception e) {
-      logger.error("UserSearchService:
-                   : Exception occurred = " + e);
+      logger.error("UserSearchService:: Exception occurred = " + e);
     }
     return "";
   }
