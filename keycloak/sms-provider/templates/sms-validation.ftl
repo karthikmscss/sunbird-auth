@@ -33,7 +33,7 @@
                     <div class="${properties.kcFormOptionsWrapperClass!} signUpMsg mb-56 mt-45 textCenter">
                         <span>
                             <a id="backToApplication" onclick="javascript:makeDivUnclickable()" class="backToLogin" href="${client.baseUrl}">
-                                <span class="fs-14"><< </span>${msg("backToApplication")}
+                                <span class="fs-14"><< </span>${msg("backToLogin")}
                             </a>
                         </span>
                     </div>
