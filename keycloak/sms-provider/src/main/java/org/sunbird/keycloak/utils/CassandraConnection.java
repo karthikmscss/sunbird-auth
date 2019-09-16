@@ -33,8 +33,7 @@ public class CassandraConnection {
     } else {
       hosts = new String[] { "localhost" };
     }
-    cluster = Cluster.builder().addContactPoints(hosts)
-        .withRetryPolicy(DefaultRetryPolicy.INSTANCE).build();
+    cluster = Cluster.builder().addContactPoints(hosts).build();
     session = cluster.connect();
   }
 

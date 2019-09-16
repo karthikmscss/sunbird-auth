@@ -1,3 +1,4 @@
+/*
 package org.sunbird.keycloak.storage.spi;
 
 import static org.junit.Assert.assertEquals;
@@ -75,3 +76,4 @@ public class UserSearchServiceTest {
     assertEquals("token1",token);
   }
 }
+*/
