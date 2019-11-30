@@ -29,7 +29,7 @@ import java.util.List;
 
 public class SignUpFormAction implements FormAction,FormActionFactory {
 	public static final String PROVIDER_ID = "registration-sunbird-user-creation";
-    private String email = "";
+    //private String email = "";
     @Override
     public String getHelpText() {
         return "This action must always be first! Validates the username of the user in validation phase.  In success phase, this will create the user in the database.";
@@ -113,7 +113,6 @@ public class SignUpFormAction implements FormAction,FormActionFactory {
 
 		} else {
 			formData = context.getHttpRequest().getDecodedFormParameters();
-	        email = formData.getFirst(Validation.FIELD_EMAIL);
 	        context.getHttpRequest().getDecodedFormParameters().put(Validation.FIELD_EMAIL, new ArrayList(Arrays.asList("encrypted_email_"+email)));
 			context.success();
 		}
@@ -128,11 +127,10 @@ public class SignUpFormAction implements FormAction,FormActionFactory {
     public void success(FormContext context) {
     	System.out.println("success method called");
         MultivaluedMap<String, String> formData = context.getHttpRequest().getDecodedFormParameters();
-        email = formData.getFirst(Validation.FIELD_EMAIL);
+        String email = formData.getFirst(Validation.FIELD_EMAIL);
         String username = formData.getFirst(RegistrationPage.FIELD_USERNAME);
         String phone = formData.getFirst("user.attributes.phone");
         String age = formData.getFirst("user.attributes.age");
-        //formData.add(Validation.FIELD_EMAIL, "encryptedEmail_"+email);
         UserModel user = context.getSession().users().addUser(context.getRealm(), "encUserName_"+username);
         user.setAttribute("phone", new ArrayList<>(Arrays.asList("encryptedPhone_"+phone)));
         user.setAttribute("age", new ArrayList<>(Arrays.asList(age)));
