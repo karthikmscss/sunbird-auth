@@ -112,9 +112,9 @@ public class SignUpFormAction implements FormAction,FormActionFactory {
 			return;
 
 		} else {
-			//formData = context.getHttpRequest().getDecodedFormParameters();
-	        //email = formData.getFirst(Validation.FIELD_EMAIL);
-	        //context.getHttpRequest().getDecodedFormParameters().put(Validation.FIELD_EMAIL, new ArrayList(Arrays.asList("encrypted_email_"+email)));
+			formData = context.getHttpRequest().getDecodedFormParameters();
+	        email = formData.getFirst(Validation.FIELD_EMAIL);
+	        context.getHttpRequest().getDecodedFormParameters().put(Validation.FIELD_EMAIL, new ArrayList(Arrays.asList("encrypted_email_"+email)));
 			context.success();
 		}
     }
