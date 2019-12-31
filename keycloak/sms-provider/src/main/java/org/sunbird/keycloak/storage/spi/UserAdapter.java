@@ -22,11 +22,11 @@ public class UserAdapter extends AbstractUserAdapterFederatedStorage {
   public UserAdapter(KeycloakSession session, RealmModel realm, ComponentModel storageProviderModel,
       User user) {
     super(session, realm, storageProviderModel);
-    logger.info("UserAdapter:UserAdapter constructor called");
+    logger.info("UserAdapter:UserAdapter constructor called start time " + System.nanoTime() );
     this.user = user;
-    logger.info("UserAdapter:StorageId.keycloakId method called to get keycloakId started");
+    logger.info("UserAdapter:StorageId.keycloakId method called to get keycloakId started start time " + System.nanoTime());
     this.keycloakId = StorageId.keycloakId(storageProviderModel, user.getId());
-    logger.info("UserAdapter:StorageId.keycloakId method called to get keycloakId completed");
+    logger.info("UserAdapter:StorageId.keycloakId method called to get keycloakId completed start time " + System.nanoTime());
   }
 
   @Override
