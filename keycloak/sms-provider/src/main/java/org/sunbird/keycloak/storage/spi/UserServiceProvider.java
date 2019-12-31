@@ -39,9 +39,9 @@ public class UserServiceProvider
 
   @Override
   public UserModel getUserById(String id, RealmModel realm) {
-    logger.info("UserServiceProvider:getUserById: id = " + id);
+    logger.info("UserServiceProvider:getUserById: id = " + id  +" Time takne " + System.nanoTime());
     String externalId = StorageId.externalId(id);
-    logger.info("UserServiceProvider:getUserById: externalId found = " + externalId);
+    logger.info("UserServiceProvider:getUserById: externalId found = " + externalId  + " Time takne " + System.nanoTime());
     return new UserAdapter(session, realm, model, userService.getById(externalId));
   }
 

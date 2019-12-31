@@ -23,27 +23,40 @@ public class UserService {
 
   public User getById(String id) {
 	logger.info("UserService:getById get by id method called from cassandra = " + id);  
-    ResultSet rs =
-        this.connection.getSession().execute("select * from sunbird.user where id = '" + id + "'");
-    Row r = rs.one();
-    User user = new User(r.getString(Constants.ID), r.getString(Constants.FIRST_NAME), "");
-    String email = decrypt(r.getString(Constants.EMAIL));
-    user.setEmail(email);
-    String username = decrypt(r.getString(Constants.USERNAME.toLowerCase()));
-    user.setUsername(username);
-    String phone = decrypt(r.getString(Constants.PHONE));
-    user.setPhone(phone);
-    user.setLastName(r.getString(Constants.LAST_NAME));
-    user.setCountryCode(r.getString("countrycode"));
-    if (r.getBool("isdeleted")) {
-      user.setEnabled(false);
-    } else {
-      user.setEnabled(true);
-    }
-    logger.info("UserService:getById get by id method called ended from cassandra = " + id); 
-    return user;
+		/*
+		 * ResultSet rs = this.connection.getSession().
+		 * execute("select * from sunbird.user where id = '" + id + "'"); Row r =
+		 * rs.one(); User user = new User(r.getString(Constants.ID),
+		 * r.getString(Constants.FIRST_NAME), ""); String email =
+		 * decrypt(r.getString(Constants.EMAIL)); user.setEmail(email); String username
+		 * = decrypt(r.getString(Constants.USERNAME.toLowerCase()));
+		 * user.setUsername(username); String phone =
+		 * decrypt(r.getString(Constants.PHONE)); user.setPhone(phone);
+		 * user.setLastName(r.getString(Constants.LAST_NAME));
+		 * user.setCountryCode(r.getString("countrycode")); if (r.getBool("isdeleted"))
+		 * { user.setEnabled(false); } else { user.setEnabled(true); }
+		 */
+	return createTestUser (id);
+    //logger.info("UserService:getById get by id method called ended from cassandra = " + id); 
+    //return user;
   }
 
+  
+  
+	private User createTestUser(String id) {
+		User user = new User(id, "Update password", "");
+		user.setEmail("ashokald5@gmail.com");
+		user.setUsername("ashokald5_1234");
+		user.setPhone("9874321234");
+		user.setCountryCode("+91");
+		user.setEnabled(true);
+		logger.info("UserService:getById get dummy user = " + id); 
+		return user;
+	}
+  
+  
+  
+  
   public List<User> getByUsername(String username) {
     List<User> users = null;
     String numberRegex = "\\d+";
