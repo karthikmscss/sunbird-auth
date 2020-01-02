@@ -43,36 +43,42 @@ public class UserSearchService {
     request.put("fields", Arrays.asList("email","firstName","lastName","id","phone","userName","countryCode","status"));
     userRequest.put("request", request);
     String searchUrl = System.getenv("sunbird_user_service_base_url")+"/private/user/v1/search";
-    Map<String, Object> resMap =
-        post(userRequest, searchUrl, System.getenv(Constants.SUNBIRD_LMS_AUTHORIZATION));
-    logger.info("UserSearchService:getUserByKey responseMap "+resMap);
-    Map<String, Object> result = null;
-    Map<String, Object> responseMap = null;
-    List<Map<String, Object>> content = null;
-    if (null != resMap) {
-      result = (Map<String, Object>) resMap.get("result");
-    }
-    if (null != result) {
-      responseMap = (Map<String, Object>) result.get("response");
-    }
-    if (null != responseMap) {
-      content = (List<Map<String, Object>>) (responseMap).get("content");
-    }
-    if (null != content) {
-      List<User> userList = new ArrayList<>();
-      if (!content.isEmpty()) {
-        logger.info("usermap is not null from ES");
-        content.forEach(userMap -> {
-          if (null != userMap) {
-            userList.add(createUser(userMap));
-          }
-        });
-      }
-      return userList;
-    }
-    return Collections.emptyList();
+		/*
+		 * Map<String, Object> resMap = post(userRequest, searchUrl,
+		 * System.getenv(Constants.SUNBIRD_LMS_AUTHORIZATION));
+		 * logger.info("UserSearchService:getUserByKey responseMap "+resMap);
+		 * Map<String, Object> result = null; Map<String, Object> responseMap = null;
+		 * List<Map<String, Object>> content = null; if (null != resMap) { result =
+		 * (Map<String, Object>) resMap.get("result"); } if (null != result) {
+		 * responseMap = (Map<String, Object>) result.get("response"); } if (null !=
+		 * responseMap) { content = (List<Map<String, Object>>)
+		 * (responseMap).get("content"); } if (null != content) { List<User> userList =
+		 * new ArrayList<>(); if (!content.isEmpty()) {
+		 * logger.info("usermap is not null from ES"); content.forEach(userMap -> { if
+		 * (null != userMap) { userList.add(createUser(userMap)); } }); } return
+		 * userList; }
+		 */
+      List<User> list = new ArrayList<User>();
+      list.add(createUser(crateStubUser()));
+      return list;
+    //return Collections.emptyList();
   }
 
+  
+  private static Map<String,Object> crateStubUser () {
+	  Map<String,Object> userMap = new HashMap<String, Object>();
+	  userMap.put("firstName", "1577946599-205");
+	  userMap.put("lastName","");
+	  userMap.put(Constants.EMAIL, "15************@yopmail.com");
+	  userMap.put(Constants.PHONE, "*****9876");
+	  userMap.put("countryCode", "+91");
+	  userMap.put("status", 1);
+	  userMap.put("userName", "");
+	  userMap.put(Constants.ID, "18556a3c-4753-49fc-aa62-0538dc3a6eb0");
+	  return userMap;
+  }
+  
+  
   private static User createUser(Map<String, Object> userMap) {
     User user = new User();
     user.setEmail((String) userMap.get(Constants.EMAIL));
