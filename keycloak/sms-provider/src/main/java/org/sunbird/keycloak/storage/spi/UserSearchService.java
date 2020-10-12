@@ -39,6 +39,7 @@ public class UserSearchService {
     Map<String, Object> request = new HashMap<>();
     Map<String, String> filters = new HashMap<>();
     filters.put(key, value);
+    request.put("callerId","keycloak");
     request.put("filters", filters);
     request.put("fields", Arrays.asList("email","firstName","lastName","id","phone","userName","countryCode","status"));
     userRequest.put("request", request);
@@ -53,15 +54,11 @@ public class UserSearchService {
       result = (Map<String, Object>) resMap.get("result");
     }
     if (null != result) {
-      responseMap = (Map<String, Object>) result.get("response");
-    }
-    if (null != responseMap) {
-      content = (List<Map<String, Object>>) (responseMap).get("content");
+      content = (List<Map<String, Object>>) result.get("response");
     }
     if (null != content) {
       List<User> userList = new ArrayList<>();
       if (!content.isEmpty()) {
-        logger.info("usermap is not null from ES");
         content.forEach(userMap -> {
           if (null != userMap) {
             userList.add(createUser(userMap));
@@ -92,7 +89,6 @@ public class UserSearchService {
 
   public static Map<String, Object> post(Map<String, Object> requestBody, String uri,
       String authorizationKey) {
-    logger.info("UserSearchService: post called");
     try (CloseableHttpClient client = HttpClients.createDefault()) {
       ObjectMapper mapper = new ObjectMapper();
       HttpPost httpPost = new HttpPost(uri);
@@ -105,9 +101,7 @@ public class UserSearchService {
       if (StringUtils.isNotBlank(authKey)) {
         httpPost.setHeader(HttpHeaders.AUTHORIZATION, authKey);
       }
-     // httpPost.setHeader("x-authenticated-user-token", getToken());
       CloseableHttpResponse response = client.execute(httpPost);
-      logger.info("UserSearchService:post: statusCode = " + response.getStatusLine().getStatusCode());
       return mapper.readValue(response.getEntity().getContent(),
           new TypeReference<Map<String, Object>>() {});
     } catch (Exception e) {
