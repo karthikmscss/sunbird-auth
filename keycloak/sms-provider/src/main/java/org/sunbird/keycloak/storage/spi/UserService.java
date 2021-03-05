@@ -25,7 +25,7 @@ public class UserService {
   public List<User> getByUsername(String username) {
     List<User> users = null;
     String numberRegex = "\\d+";
-    String emailRegex = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+    String emailRegex = "^[_A-Za-z0-9-\\+.]+(\\.[_A-Za-z0-9-]+)*@"
       + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
     // mobile number length is of 10 digit
     // assumption is either username will match with phone or email
